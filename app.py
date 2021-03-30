@@ -3,9 +3,10 @@ import pandas as pd
 import numpy as np
 import pickle as pkl
 import altair as alt
-import joblib 
 
-model = joblib.load('music-recommender.joblib')
+pickle_in = open('music-recommender.pickle', 'rb')
+model = pkl.load(pickle_in)
+pickle_in.close()
 
 
 
@@ -22,6 +23,7 @@ def main():
     st.text("This application recommends a genre of music based on age and gender")
     st.text("Using Streamlit")
 
+    url = 'https://raw.githubusercontent.com/AdiPersonalWorks/Random/master/student_scores%20-%20student_scores.csv'
     df = pd.read_csv('music.csv')
 
     if st.checkbox('Show Dataset'):
@@ -29,8 +31,9 @@ def main():
         st.table(df)
 
     
+
     st.header('Add age and gender')
-    age = st.slider("Enter your age",20,37,22)
+    age = st.slider("Enter your age",20,37)
     select_gender = st.selectbox("Select your gender", ("Male","Female"))
     if select_gender=='Male':
         gender = 0
